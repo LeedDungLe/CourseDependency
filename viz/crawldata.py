@@ -16,7 +16,7 @@ BASE_URL = 'http://sis.hust.edu.vn/ModuleProgram/CourseLists.aspx'
 COURSE_COLLECTION_FOLDER = "../assets"
 
 # Select Webbrowser. 1 =Firefox, 2 = Chrome, 3 = Edge
-WebBrowserSelector=3
+WebBrowserSelector=2
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Crawl():
@@ -24,15 +24,16 @@ class Crawl():
         #Them 1 so option cho trinh duyet gia lap
         chrome_option=Options()
         chrome_option.add_argument("--incognito") #An danh
-        chrome_option.add_argument("--headless") #khong hien thi UI
+        # chrome_option.add_argument("--headless") #khong hien thi UI
 
 
         #Khai bao bien browser điều khiển quá trình crawl
+        #Cần kiểm tra version của WebDriver tương thích với trình duyệt đang sử dụng
         browser = NAN
         if WebBrowserSelector == 1:
             browser = webdriver.Firefox()   # import browser firefox}    
         elif WebBrowserSelector == 2:   
-            browser = webdriver.Chrome(chrome_options=chrome_option, opexecutable_path="./BrowserDrivers/chromedriver.exe")
+            browser = webdriver.Chrome(chrome_options=chrome_option, executable_path="./BrowserDrivers/chromedriver.exe")
         elif WebBrowserSelector == 3:   
             browser = webdriver.Edge(executable_path=r'./BrowserDrivers/msedgedriver.exe')   # import browser firefox}    
         
@@ -62,6 +63,7 @@ class Crawl():
         pageIndex = 0;
         #Chỉ số của course
         courseIndex = 0;
+        #duyệt từng trang trên website
         for i in range(pageCount):
             #Vòng lặp lấy du lieu học phần và lưu vào cấu trúc datacrawl
             # Ví dụ MI1010	Giải tích I	3(3-2-0-6)	3	5	0.7
